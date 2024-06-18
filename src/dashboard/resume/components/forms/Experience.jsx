@@ -29,7 +29,7 @@ function Experience() {
         
     },[])
 
-    const handleChange=(index,event)=>{
+     const handleChange=(index,event)=>{
         const newEntries=experinceList.slice();
         const {name,value}=event.target;
         newEntries[index][name]=value;

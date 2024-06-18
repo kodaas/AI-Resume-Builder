@@ -10,6 +10,7 @@ function RichTextEditor({onRichTextEditorChange,index,defaultValue}) {
     const [value,setValue]=useState(defaultValue);
     const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext)
     const [loading,setLoading]=useState(false);
+    
     const GenerateSummeryFromAI=async()=>{
      
       if(!resumeInfo?.Experience[index]?.title)
@@ -23,7 +24,13 @@ function RichTextEditor({onRichTextEditorChange,index,defaultValue}) {
       const result=await AIChatSession.sendMessage(prompt);
       console.log(result.response.text());
       const resp=result.response.text()
-      setValue(resp.replace('[','').replace(']',''));
+      const data = JSON.parse(resp)
+      const experiencePoints = data.experience_points;
+      console.log(experiencePoints);
+      const formattedList = experiencePoints.map(point => `- ${point}`).join('\n');
+      // setValue(resp.replace('[','').replace(']',''));
+      setValue(formattedList);
+      toast('Generated make changes to update')
       setLoading(false);
     }
   
